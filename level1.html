@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ZIM - Code Creativity</title>
+
+    <!-- zimjs.com - JavaScript Canvas Framework -->
+    <script type="module">
+      import zim from "https://zimjs.org/cdn/015/zim";
+
+      // const path = "assets/";
+      // const assets = ["bebus.ttf"];
+
+      // See Docs under Frame for FIT, FILL, FULL, and TAG
+      new Frame(FIT, 1024, 768, light, dark, ready);
+      function ready() {
+        // given F (Frame), S (Stage), W (width), H (height)
+        // put code here
+        let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        let shuffledNumbers = shuffle(numbers);
+        let findNumber;
+        let currScore = numbers.length;
+
+        let numberToFind = new Label(findNumber).pos(10, 10).alp(0);
+        let score = new Label(currScore).pos(W - 30, 10).alp(0);
+
+        function checkNumber(label) {
+          label.color = "black";
+          label.outlineColor = "white";
+          if (label.text == findNumber) {
+            label.backgroundColor = green;
+            if (shuffledNumbers.length) {
+              playGame();
+            } else {
+              const pane = new Pane({
+                width: 600,
+                height: 250,
+
+                content: {
+                  message: `Your score is ${currScore}`,
+                  buttons: [
+                    {
+                      label: "PLAY AGAIN",
+                      bgColor: green,
+                      call: () => {
+                        zgo("level1.html");
+                      },
+                    },
+                    {
+                      label: "NEXT LEVEL",
+                      bgColor: green,
+                      call: () => {
+                        zgo("level2.html");
+                      },
+                    },
+                  ],
+                },
+              }).show();
+            }
+          } else {
+            label.backgroundColor = red;
+            currScore--;
+            score.text = currScore;
+            shuffledNumbers = shuffledNumbers.filter(
+              (num) => num != label.text
+            );
+            zogr(shuffledNumbers);
+          }
+          S.update();
+        }
+
+        function playGame() {
+          findNumber = pluck(shuffledNumbers, true);
+
+          numberToFind.text = findNumber;
+        }
+
+        const gridSize = 3;
+        let label = new Label({
+          backgroundColor: yellow,
+          backgroundBorderWidth: 0,
+          outlineColor: white,
+          outlineWidth: 4,
+          labelWidth: 70,
+          labelHeight: 70,
+          align: "center",
+          valign: "center",
+          corner: 10,
+          // font: "Bebas Neue",
+        });
+
+        let concentrationGrid = new Tile({
+          obj: label,
+          cols: gridSize,
+          rows: gridSize,
+          spacingH: 30,
+          spacingV: 30,
+          //
+        }).center();
+
+        loop(concentrationGrid, (label, i) => {
+          label.text = shuffledNumbers[i];
+          label.alpha = 0;
+        });
+
+        function hideNumbers() {
+          loop(concentrationGrid, (label, i) => {
+            timeout(2 + i / 2, () => {
+              //   zogr(label);
+              label.color = "transparent";
+              label.outlineColor = "transparent";
+              if (i == numbers.length) {
+                numberToFind.alp(1);
+                score.alp(1);
+
+                loop(concentrationGrid, (label, i) => {
+                  label.on("click", () => checkNumber(label));
+                });
+              }
+              S.update();
+            });
+          });
+          playGame();
+        }
+
+        function showNumbers() {
+          loop(concentrationGrid, (label, i) => {
+            label.alpha = 1;
+          });
+          hideNumbers();
+        }
+
+        showNumbers();
+      } // end ready
+    </script>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ZIM - Code Creativity</title>
+
+    <!-- zimjs.com - JavaScript Canvas Framework -->
+    <script type="module">
+      import zim from "https://zimjs.org/cdn/015/zim";
+
+      //   const path = "assets/";
+      //   const assets = ["bebus.ttf"];
+
+      // See Docs under Frame for FIT, FILL, FULL, and TAG
+      new Frame(FIT, 1024, 768, light, dark, ready);
+      function ready() {
+        // given F (Frame), S (Stage), W (width), H (height)
+        // put code here
+        new Label({
+          text: "Concentration Game",
+          //   font: "Bebas Neue",
+          size: 45,
+          lineWidth: 10,
+
+          labelWidth: W - 1500,
+          //   labelHeight: 70,
+          align: "center",
+          valign: "center",
+        })
+          .centerReg()
+          .sca(3);
+        // new Pic(assets[0]).center().sca(0.9).bot();
+
+        new Button({ label: "Play", backgroundColor: "green" })
+          .centerReg()
+          .pos(H / 2, W / 1.75)
+          .drag()
+          .tap(() => {
+            zgo("level1.html");
+          });
+      } // end ready
+    </script>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+  </head>
+  <body></body>
+</html>
