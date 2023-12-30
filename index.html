@@ -8,14 +8,16 @@
     <script type="module">
       import zim from "https://zimjs.org/cdn/015/zim";
 
-      //   const path = "assets/";
-      //   const assets = ["bebus.ttf"];
+      const path = "assets/";
+      const assets = ["background1.jpg"];
 
       // See Docs under Frame for FIT, FILL, FULL, and TAG
-      new Frame(FIT, 1024, 768, light, dark, ready);
+      new Frame(FIT, 1024, 768, light, dark, ready, assets, path);
       function ready() {
         // given F (Frame), S (Stage), W (width), H (height)
         // put code here
+        new Pic(assets[0]).center().sca(0.7).bot();
+
         new Label({
           text: "Concentration Game",
           //   font: "Bebas Neue",

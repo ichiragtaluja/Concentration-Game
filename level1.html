@@ -8,21 +8,29 @@
     <script type="module">
       import zim from "https://zimjs.org/cdn/015/zim";
 
-      // const path = "assets/";
-      // const assets = ["bebus.ttf"];
+      const path = "assets/";
+      const assets = ["background2.jpg"];
 
       // See Docs under Frame for FIT, FILL, FULL, and TAG
-      new Frame(FIT, 1024, 768, light, dark, ready);
+      new Frame(FIT, 1024, 768, light, dark, ready, assets, path);
       function ready() {
         // given F (Frame), S (Stage), W (width), H (height)
         // put code here
+
+        new Pic(assets[0]).center().sca(0.7).bot();
+
         let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         let shuffledNumbers = shuffle(numbers);
         let findNumber;
         let currScore = numbers.length;
 
-        let numberToFind = new Label(findNumber).pos(10, 10).alp(0);
+        new Label("Find: ").pos(10, 10);
+        let numberToFind = new Label(findNumber).pos(100, 10).alp(0);
+        new Label("Score:").pos(W - 200, 10);
         let score = new Label(currScore).pos(W - 30, 10).alp(0);
+        let instruction = new Label("Click on the correct box")
+          .pos(W / 2 - 190, H - 100)
+          .alp(0);
 
         function checkNumber(label) {
           label.color = "black";
@@ -41,6 +49,9 @@
                   buttons: [
                     {
                       label: "PLAY AGAIN",
+                      width: 300,
+                      height: 100,
+
                       bgColor: green,
                       call: () => {
                         zgo("level1.html");
@@ -48,7 +59,9 @@
                     },
                     {
                       label: "NEXT LEVEL",
-                      bgColor: green,
+                      width: 300,
+                      height: 100,
+                      bgColor: green.lighten(0.1),
                       call: () => {
                         zgo("level2.html");
                       },
@@ -112,6 +125,7 @@
               if (i == numbers.length) {
                 numberToFind.alp(1);
                 score.alp(1);
+                instruction.alp(1);
 
                 loop(concentrationGrid, (label, i) => {
                   label.on("click", () => checkNumber(label));
