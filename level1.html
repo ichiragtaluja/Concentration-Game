@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>ZIM - Code Creativity</title>
+    <title>Concentration Game</title>
 
     <!-- zimjs.com - JavaScript Canvas Framework -->
     <script type="module">
@@ -25,9 +25,13 @@
         let currScore = numbers.length;
 
         new Label("Find: ").pos(10, 10);
+
         let numberToFind = new Label(findNumber).pos(100, 10).alp(0);
+
         new Label("Score:").pos(W - 200, 10);
+
         let score = new Label(currScore).pos(W - 30, 10).alp(0);
+
         let instruction = new Label("Click on the correct box")
           .pos(W / 2 - 190, H - 100)
           .alp(0);
@@ -99,7 +103,6 @@
           align: "center",
           valign: "center",
           corner: 10,
-          // font: "Bebas Neue",
         });
 
         let concentrationGrid = new Tile({
